@@ -1,0 +1,23 @@
+{
+    "name": "mycro-db",
+    "version": "0.0.1",
+    "description": "MycroDB is a JavaScript library for managing Document Databases stored in a single JSON file.",
+    "license": "MIT",
+    "main": "/src/index.js",
+    "author": {
+        "name": "Diegiwg (Diego Queiroz)",
+        "email": "diegiwg@gmail.com",
+        "url": "https://github.com/Diegiwg"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Diegiwg/mycro-db"
+    },
+    "keywords": [
+        "MycroDB",
+        "JavaScript",
+        "Database Library",
+        "Document Database",
+        "JSON Storage"
+    ]
+}

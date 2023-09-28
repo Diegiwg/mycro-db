@@ -1,0 +1,5 @@
+# Exclude all files except /src/index.js
+**
+!src/
+src/**
+!src/index.js

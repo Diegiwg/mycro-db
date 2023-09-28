@@ -3,7 +3,6 @@ import fs from "fs";
 
 import { MycroDatabase } from "../src/index.js";
 
-// SETUP: Deletar arquivo do banco de dados.
 function clear() {
     if (fs.existsSync("./test/test.json")) {
         fs.unlinkSync("./test/test.json");
@@ -19,33 +18,32 @@ const UserSchema = {
     url: "",
 };
 
-// SETUP: Criar banco de dados.
+const DefaultUser = {
+    name: "John Doe",
+    email: "johndoe@email.com",
+    url: "john-doe.com",
+};
+
 const db = new MycroDatabase("./test/test.json");
 
-// TEST: Inserir um registro no banco.
+const User = db.collection("users", UserSchema);
+
 ava("Insert a new Document", (t) => {
-    const User = db.collection("users", UserSchema);
+    User.insert(DefaultUser);
 
-    User.insert({
-        name: "Diego Queiroz",
-        email: "diegiwg@gmail.com",
-        url: "https://github.com/Diegiwg",
-    });
-
-    const result = User.query((doc) => doc.name === "Diego Queiroz");
+    const result = User.query((doc) => doc.name === "John Doe");
     const expected = [
         {
             id: 1,
-            name: "Diego Queiroz",
-            email: "diegiwg@gmail.com",
-            url: "https://github.com/Diegiwg",
+            name: "John Doe",
+            email: "johndoe@email.com",
+            url: "john-doe.com",
         },
     ];
 
     t.deepEqual(result, expected);
 });
 
-// TEST: Sincronizar o banco de dados.
 ava("Sync the database", (t) => {
     db.sync();
 
@@ -56,45 +54,48 @@ ava("Sync the database", (t) => {
     const result = JSON.parse(content);
     const expected = {
         memory: {
-            1: {
-                name: "Diego Queiroz",
-                email: "diegiwg@gmail.com",
-                url: "https://github.com/Diegiwg",
-                id: 1,
+            users: {
+                documents: {
+                    1: {
+                        id: 1,
+                        name: "John Doe",
+                        email: "johndoe@email.com",
+                        url: "john-doe.com",
+                    },
+                },
+                id: 2,
             },
         },
-        id: 2,
+        collections: {
+            users: true,
+        },
     };
 
     t.deepEqual(result, expected);
 });
 
-// TEST: Buscar todos os registros.
 ava("Query all documents", (t) => {
     const result = db.collection("users", UserSchema).query();
+
     const expected = [
         {
             id: 1,
-            name: "Diego Queiroz",
-            email: "diegiwg@gmail.com",
-            url: "https://github.com/Diegiwg",
+            name: "John Doe",
+            email: "johndoe@email.com",
+            url: "john-doe.com",
         },
     ];
 
     t.deepEqual(result, expected);
 });
 
-//TEST: Buscar um registro que não existe.
 ava("Query a non-existent document", (t) => {
-    const result = db
-        .collection("users", UserSchema)
-        .query((doc) => doc.name === "John Doe");
+    const result = User.query((doc) => doc.name === "Another User");
     const expected = [];
 
     t.deepEqual(result, expected);
 });
 
-//TEST: Carregar banco de dados do disco.
 ava("Load the database from disk", (t) => {
     const localDB = new MycroDatabase("./test/test.json");
 
@@ -102,9 +103,9 @@ ava("Load the database from disk", (t) => {
     const expected = [
         {
             id: 1,
-            name: "Diego Queiroz",
-            email: "diegiwg@gmail.com",
-            url: "https://github.com/Diegiwg",
+            name: "John Doe",
+            email: "johndoe@email.com",
+            url: "john-doe.com",
         },
     ];
 

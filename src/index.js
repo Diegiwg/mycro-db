@@ -2,25 +2,18 @@ import fs from "fs";
 
 export class MycroDatabase {
     /**
-     * @type {string}
      * @private
      * @readonly
+     * @type {string}
      */
     __filePath;
 
     /**
-     * @type {object}
      * @private
      * @readonly
+     * @type {Object<string, {documents: Array, id: number}>}
      */
     __memory = {};
-
-    /**
-     * @type {number}
-     * @private
-     * @readonly
-     */
-    __id;
 
     /**
      * @private
@@ -33,7 +26,7 @@ export class MycroDatabase {
         const object = JSON.parse(content);
 
         this.__memory = object.memory || {};
-        this.__id = Number(object.id) || 0;
+        this.__collections = object.collections || {};
     }
 
     __save() {
@@ -41,17 +34,25 @@ export class MycroDatabase {
             this.__filePath,
             JSON.stringify({
                 memory: this.__memory,
-                id: this.__id,
+                collections: this.__collections,
             })
         );
     }
 
-    __nextId() {
-        if (!this.__id) {
-            this.__id = 1;
+    /**
+     * @param {string} collection
+     * @return {number}
+     */
+    __nextId(collection) {
+        if (!collection) {
+            throw new Error("collection is required");
         }
 
-        return this.__id++;
+        if (!this.__collections[collection]) {
+            throw new Error("collection does not exist");
+        }
+
+        return this.__memory[collection].id++;
     }
 
     /**
@@ -94,16 +95,26 @@ export class MycroDatabase {
             throw new Error("schema is required");
         }
 
+        if (!this.__collections[identifier]) {
+            this.__memory[identifier] = {
+                documents: {},
+                id: 1,
+            };
+
+            this.__collections[identifier] = true;
+        }
+
         /**
          * Inserts a document into the collection.
          *
          * @param {Document} doc - The document to insert.
          */
         const insert = (doc) => {
-            const id = this.__nextId();
+            const id = this.__nextId(identifier);
 
             doc["id"] = id;
-            this.__memory[id] = doc;
+
+            this.__memory[identifier].documents[id] = doc;
         };
 
         /**
@@ -113,7 +124,7 @@ export class MycroDatabase {
          * @returns {Document[]} - An array of documents that match the filter.
          */
         const query = (filter) => {
-            const values = Object.values(this.__memory);
+            const values = Object.values(this.__memory[identifier].documents);
 
             if (!filter) {
                 return values;
@@ -126,10 +137,6 @@ export class MycroDatabase {
             insert,
             query,
         };
-
-        if (!this.__collections[identifier]) {
-            this.__collections[identifier] = collection;
-        }
 
         return collection;
     }

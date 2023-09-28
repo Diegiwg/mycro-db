@@ -1,1 +1,1 @@
-{"memory":{"1":{"name":"Diego Queiroz","email":"diegiwg@gmail.com","url":"https://github.com/Diegiwg","id":1}},"id":2}
+{"memory":{"users":{"documents":{"1":{"name":"John Doe","email":"johndoe@email.com","url":"john-doe.com","id":1}},"id":2}},"collections":{"users":true}}

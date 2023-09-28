@@ -79,10 +79,11 @@ export class MycroDatabase {
     }
 
     /**
-     * @template Document
+     * Represents a collection of documents.
      *
-     * @param {string} identifier
-     * @param {Document} schema
+     * @template Document
+     * @param {string} identifier - The identifier of the collection.
+     * @param {Document} schema - The schema of the documents in the collection.
      */
     collection(identifier, schema) {
         if (!identifier) {
@@ -94,7 +95,9 @@ export class MycroDatabase {
         }
 
         /**
-         * @param {Document} doc
+         * Inserts a document into the collection.
+         *
+         * @param {Document} doc - The document to insert.
          */
         const insert = (doc) => {
             const id = this.__nextId();
@@ -104,8 +107,10 @@ export class MycroDatabase {
         };
 
         /**
-         * @param {*} filter
-         * @returns {Document[]}
+         * Queries the collection for documents that match the filter.
+         *
+         * @param {(doc: Document) => boolean} filter - The filter to apply.
+         * @returns {Document[]} - An array of documents that match the filter.
          */
         const query = (filter) => {
             const values = Object.values(this.__memory);

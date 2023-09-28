@@ -1,6 +1,6 @@
 {
     "name": "mycro-db",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "MycroDB is a JavaScript library for managing Document Databases stored in a single JSON file.",
     "license": "MIT",
     "main": "mycro-db.js",

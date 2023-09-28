@@ -12,17 +12,19 @@ function clear() {
 
 clear();
 
+const UserSchema = {
+    id: 0,
+    name: "",
+    email: "",
+    url: "",
+};
+
 // SETUP: Criar banco de dados.
 const db = new MycroDatabase("./test/test.json");
 
 // TEST: Inserir um registro no banco.
 ava("Insert a new Document", (t) => {
-    const User = db.collection("users", {
-        id: 0,
-        name: "",
-        email: "",
-        url: "",
-    });
+    const User = db.collection("users", UserSchema);
 
     User.insert({
         name: "Diego Queiroz",
@@ -30,9 +32,7 @@ ava("Insert a new Document", (t) => {
         url: "https://github.com/Diegiwg",
     });
 
-    const result = db
-        .collection("users")
-        .query((doc) => doc.name === "Diego Queiroz");
+    const result = User.query((doc) => doc.name === "Diego Queiroz");
     const expected = [
         {
             id: 1,
@@ -71,7 +71,7 @@ ava("Sync the database", (t) => {
 
 // TEST: Buscar todos os registros.
 ava("Query all documents", (t) => {
-    const result = db.collection("users").query();
+    const result = db.collection("users", UserSchema).query();
     const expected = [
         {
             id: 1,
@@ -87,7 +87,7 @@ ava("Query all documents", (t) => {
 //TEST: Buscar um registro que não existe.
 ava("Query a non-existent document", (t) => {
     const result = db
-        .collection("users")
+        .collection("users", UserSchema)
         .query((doc) => doc.name === "John Doe");
     const expected = [];
 
@@ -98,7 +98,7 @@ ava("Query a non-existent document", (t) => {
 ava("Load the database from disk", (t) => {
     const localDB = new MycroDatabase("./test/test.json");
 
-    const result = localDB.collection("users").query();
+    const result = localDB.collection("users", UserSchema).query();
     const expected = [
         {
             id: 1,

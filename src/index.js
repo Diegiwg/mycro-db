@@ -22,6 +22,12 @@ export class MycroDatabase {
      */
     __id;
 
+    /**
+     * @private
+     * @readonly
+     */
+    __collections = {};
+
     __load() {
         const content = fs.readFileSync(this.__filePath, "utf-8");
         const object = JSON.parse(content);
@@ -79,6 +85,14 @@ export class MycroDatabase {
      * @param {Document} schema
      */
     collection(identifier, schema) {
+        if (!identifier) {
+            throw new Error("identifier is required");
+        }
+
+        if (!schema) {
+            throw new Error("schema is required");
+        }
+
         /**
          * @param {Document} doc
          */
@@ -103,9 +117,15 @@ export class MycroDatabase {
             return values.filter(filter);
         };
 
-        return {
+        const collection = {
             insert,
             query,
         };
+
+        if (!this.__collections[identifier]) {
+            this.__collections[identifier] = collection;
+        }
+
+        return collection;
     }
 }

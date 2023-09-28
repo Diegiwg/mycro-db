@@ -74,3 +74,7 @@ v0.2.1
     - Fixed a minor 'import' example error in the README.
         - Old: import MycroDatabase from 'mycro-db'
         - New: import { MycroDatabase } from 'mycro-db
+v0.2.2
+    - Removed all Rollup build tooling.
+        - The library is 'self-contained' and does not require a separate build process (for now).
+    - Updated the package.json to reflect the changes.

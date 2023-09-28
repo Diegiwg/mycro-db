@@ -1,9 +1,9 @@
 {
     "name": "mycro-db",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "MycroDB is a JavaScript library for managing Document Databases stored in a single JSON file.",
     "license": "MIT",
-    "main": "mycro-db.js",
+    "main": "./lib/mycro-db.js",
     "type": "module",
     "author": {
         "name": "Diegiwg (Diego Queiroz)",
@@ -22,14 +22,10 @@
         "JSON Storage"
     ],
     "devDependencies": {
-        "@rollup/plugin-babel": "^6.0.3",
-        "@rollup/plugin-commonjs": "^25.0.4",
-        "@rollup/plugin-node-resolve": "^15.2.1",
-        "ava": "^5.3.1",
-        "rollup": "^3.29.3"
+        "ava": "^5.3.1"
     },
     "scripts": {
-        "build": "rollup -c",
+        "build": "node .builder.js",
         "test": "npx ava"
     }
 }

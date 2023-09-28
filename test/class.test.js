@@ -17,13 +17,22 @@ const db = new MycroDatabase("./test/test.json");
 
 // TEST: Inserir um registro no banco.
 ava("Insert a new Document", (t) => {
-    db.insert({
+    const User = db.collection("users", {
+        id: 0,
+        name: "",
+        email: "",
+        url: "",
+    });
+
+    User.insert({
         name: "Diego Queiroz",
         email: "diegiwg@gmail.com",
         url: "https://github.com/Diegiwg",
     });
 
-    const result = db.query((doc) => doc.name === "Diego Queiroz");
+    const result = db
+        .collection("users")
+        .query((doc) => doc.name === "Diego Queiroz");
     const expected = [
         {
             id: 1,
@@ -44,19 +53,25 @@ ava("Sync the database", (t) => {
 
     const content = fs.readFileSync("./test/test.json", "utf-8");
 
-    t.deepEqual(JSON.parse(content), {
-        1: {
-            email: "diegiwg@gmail.com",
-            id: 1,
-            name: "Diego Queiroz",
-            url: "https://github.com/Diegiwg",
+    const result = JSON.parse(content);
+    const expected = {
+        memory: {
+            1: {
+                name: "Diego Queiroz",
+                email: "diegiwg@gmail.com",
+                url: "https://github.com/Diegiwg",
+                id: 1,
+            },
         },
-    });
+        id: 2,
+    };
+
+    t.deepEqual(result, expected);
 });
 
 // TEST: Buscar todos os registros.
 ava("Query all documents", (t) => {
-    const result = db.query();
+    const result = db.collection("users").query();
     const expected = [
         {
             id: 1,
@@ -71,7 +86,9 @@ ava("Query all documents", (t) => {
 
 //TEST: Buscar um registro que não existe.
 ava("Query a non-existent document", (t) => {
-    const result = db.query((doc) => doc.name === "John Doe");
+    const result = db
+        .collection("users")
+        .query((doc) => doc.name === "John Doe");
     const expected = [];
 
     t.deepEqual(result, expected);
@@ -81,7 +98,7 @@ ava("Query a non-existent document", (t) => {
 ava("Load the database from disk", (t) => {
     const localDB = new MycroDatabase("./test/test.json");
 
-    const result = localDB.query();
+    const result = localDB.collection("users").query();
     const expected = [
         {
             id: 1,

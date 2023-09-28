@@ -24,11 +24,20 @@ export class MycroDatabase {
 
     __load() {
         const content = fs.readFileSync(this.__filePath, "utf-8");
-        this.__memory = JSON.parse(content);
+        const object = JSON.parse(content);
+
+        this.__memory = object.memory || {};
+        this.__id = Number(object.id) || 0;
     }
 
     __save() {
-        fs.writeFileSync(this.__filePath, JSON.stringify(this.__memory));
+        fs.writeFileSync(
+            this.__filePath,
+            JSON.stringify({
+                memory: this.__memory,
+                id: this.__id,
+            })
+        );
     }
 
     __nextId() {
@@ -63,20 +72,40 @@ export class MycroDatabase {
         this.__save();
     }
 
-    insert(doc) {
-        const id = this.__nextId();
+    /**
+     * @template Document
+     *
+     * @param {string} identifier
+     * @param {Document} schema
+     */
+    collection(identifier, schema) {
+        /**
+         * @param {Document} doc
+         */
+        const insert = (doc) => {
+            const id = this.__nextId();
 
-        doc["id"] = id;
-        this.__memory[id] = doc;
-    }
+            doc["id"] = id;
+            this.__memory[id] = doc;
+        };
 
-    query(filter) {
-        const values = Object.values(this.__memory);
+        /**
+         * @param {*} filter
+         * @returns {Document[]}
+         */
+        const query = (filter) => {
+            const values = Object.values(this.__memory);
 
-        if (!filter) {
-            return values;
-        }
+            if (!filter) {
+                return values;
+            }
 
-        return values.filter(filter);
+            return values.filter(filter);
+        };
+
+        return {
+            insert,
+            query,
+        };
     }
 }

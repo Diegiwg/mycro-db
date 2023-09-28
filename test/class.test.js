@@ -1,7 +1,7 @@
 import ava from "ava";
 import fs from "fs";
 
-import MycroDatabase from "../src/index.js";
+import { MycroDatabase } from "../src/index.js";
 
 // SETUP: Deletar arquivo do banco de dados.
 function clear() {

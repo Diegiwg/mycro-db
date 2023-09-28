@@ -1,5 +1,3 @@
-# Exclude all files except /src/index.js
-**
-!src/
-src/**
-!src/index.js
+*
+!mycro-db.js
+!mycro-db.esm.js

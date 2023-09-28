@@ -1,6 +1,6 @@
 import fs from "fs";
 
-class MycroDatabase {
+export class MycroDatabase {
     /**
      * @type {string}
      * @private
@@ -80,5 +80,3 @@ class MycroDatabase {
         return values.filter(filter);
     }
 }
-
-export default MycroDatabase;

@@ -31,19 +31,32 @@ import MycroDatabase from 'mycro-db';
 const db = new MycroDatabase('my_database.json');
 ```
 
-#### Insert
+#### Collections API
+
+Starting from version 0.1.0, MycroDB introduces a Collections API for more structured data management.
+
+##### Define a Collection
+
+To define a collection, provide a name and a schema (a plain JavaScript object) that describes the structure of documents in that collection. This enables IDE auto-completion (intellisense) for users.
 
 ```javascript
-// Insert a new document
-const newDoc = { name: 'Alice', age: 28 };
-db.insert(newDoc);
+const User = db.collection('users', { id: 0, name: '', age: 0 });
 ```
 
-#### Query
+##### Insert into a Collection
+
+To insert a document into a collection, use the `insert` method provided by the collection:
 
 ```javascript
-// Query documents based on a filter
-const youngUsers = db.query((user) => user.age < 30);
+User.insert({ name: 'Alice', age: 28 });
+```
+
+##### Query a Collection
+
+To query documents in a collection, use the `query` method provided by the collection and pass a filter function:
+
+```javascript
+const youngUsers = User.query((user) => user.age < 30);
 console.log(youngUsers);
 ```
 

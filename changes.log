@@ -1,0 +1,76 @@
+Version Tracking File
+
+v0.0.0
+    - Package published on npm.
+
+v0.0.1
+    - GitHub repository created with some configuration files and initial project structure.
+
+v0.0.2
+    - Added the 'ava' package as a development dependency for testing.
+    - Implemented the initial approach for the Database.
+    - The library exports the 'MycroDatabase' class.
+    - When constructing this class, it takes a path to the JSON file.
+    - An object with 'Insert,' 'Query,' and 'Sync' functions is returned:
+        - Insert: Receives a document (object) and inserts it (in memory) into the database.
+        - Query: Receives an expression to be used as a filter (in a filter) on the database values.
+        - Sync: Synchronizes the in-memory data with the on-disk file.
+    - There are other private functions and properties that are not part of the MycroDatabase object's API:
+        - __load
+        - __save
+        - __nextId
+        - __filePath
+        - __memory
+        - __id
+
+v0.0.3
+    - Added the .npmignore file to prevent unnecessary files from being included with the library during packaging.
+
+v0.0.4
+    - Revamped the project README to include the current MycroDB API information.
+    - Added the LICENSE file.
+
+v0.0.5
+    - Added the Rollup package with some plugins for the project compilation process.
+    - Modified the package.json to fix the library import issue in other projects.
+
+v0.1.0
+    - Implemented the initial version of the Collections API.
+    - Removed direct access to Insert and Query.
+    - When defining a Collection, you should now pass (with a plain JavaScript object) what you want to be the Schema for that collection.
+        - Example: db.collection('users', {id: 0, name: "", age: 0})
+            - This will ensure that when users access the Insert and Query methods using the collection, the IDE will know that the 'Document' in this collection has the type: {id: number, name: string, age: number}, and provide auto-completion (intellisense) for the user.
+    - To use Insert and Query, you should first create a collection.
+        - Example: const User = db.collection('users', {id: 0, name: "", age: 0})
+            - User.insert({name: "John Doe", age: 20})
+            - User.query((doc) => doc.name === "John Doe")
+    - Sync remains at the database level.
+        - Example: db.sync()
+    - Tests have been modified in accordance with the above changes.
+
+v0.1.1
+    - Update README to reflect API changes.
+
+v0.1.2
+    - When defining a collection, it now checks if the required arguments are being passed for collection creation.
+    - There is no type checking on these arguments.
+    - The implementation of 'saving collection schemas' to the on-disk database has begun.
+
+v0.1.3
+    - Modified the type of the 'filter' parameter in db.collection.query.
+        - Now, the IDE can provide 'intellisense' for the 'doc' that exists inside the collection.
+            - Example: db.collection('users', {id: 0, name: "", age: 0}).query((doc) => doc.name === "John Doe")
+            - The IDE knows that 'doc' is of type {id: number, name: string, age: number}.
+
+v0.2.0
+    - The collections system is now stable.
+        - When you create a collection, it has its own in-memory space to save its objects.
+        - Objects are still indexed using auto-generated IDs.
+        - All collection-related information is also saved to disk.
+    - No changes were made to the APIs, which still include Insert and Query for each collection, and Sync for the database.
+    - Tests have been updated to reflect the changes.
+
+v0.2.1
+    - Fixed a minor 'import' example error in the README.
+        - Old: import MycroDatabase from 'mycro-db'
+        - New: import { MycroDatabase } from 'mycro-db

@@ -25,7 +25,7 @@ yarn add mycro-db
 #### Constructor
 
 ```javascript
-import MycroDatabase from 'mycro-db';
+import { MycroDatabase } from 'mycro-db';
 
 // Create a new MycroDatabase instance with a path to your JSON file
 const db = new MycroDatabase('my_database.json');

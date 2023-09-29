@@ -2,6 +2,8 @@
 
 [![Logo](/public/logo.png)](https://www.npmjs.com/package/mycro-db)
 
+## Project Overview 🚀
+
 MycroDB is a JavaScript library for managing Document Databases stored in a single JSON file.
 
 ## Project Status 🛠️

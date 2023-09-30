@@ -100,3 +100,6 @@ v0.4.0
         - General improvements in argument validations for functions.
         - Updated tests to reflect the changes.
         - README documentation updated.
+
+v0.4.1
+    - Added a 'static site' using the Github Pages.

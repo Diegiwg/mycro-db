@@ -91,3 +91,12 @@ v0.3.1
 
 v0.3.2
     - Re-added the 'project overview' label in the README.
+
+v0.4.0
+    - Removed the old build script.
+        - 'insert' now accepts multiple documents, making it simpler to insert multiple documents at once.
+            - Example: `db.collection('users', {id: 0, name: "", age: 0}).insert([{name: "John Doe", age: 20}, {name: "Jane Doe, age: 30}])`
+        - 'insert', 'update', and 'remove' now return the list of IDs related to the affected documents (created, modified, and removed).
+        - General improvements in argument validations for functions.
+        - Updated tests to reflect the changes.
+        - README documentation updated.

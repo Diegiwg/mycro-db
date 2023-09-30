@@ -4,10 +4,9 @@ import { MycroDatabase } from "../lib/mycro-db.js";
 
 ava("Remove a unique document from the collection", (t) => {
     const db = new MycroDatabase();
-    const col = db.collection("col", { id: Number(), value: String() });
+    const col = db.collection("col", { value: String() });
 
-    col.insert({ value: "a" });
-    col.insert({ value: "b" });
+    col.insert({ value: "a" }, { value: "b" });
 
     col.remove((doc) => doc.value === "a");
 
@@ -19,16 +18,14 @@ ava("Remove a unique document from the collection", (t) => {
 
 ava("Remove tree documents from the collection", (t) => {
     const db = new MycroDatabase();
-    const col = db.collection("col", {
-        id: Number(),
-        value: String(),
-        another: String(),
-    });
+    const col = db.collection("col", { value: String(), another: String() });
 
-    col.insert({ value: "a", another: "x" });
-    col.insert({ value: "b", another: "y" });
-    col.insert({ value: "c", another: "y" });
-    col.insert({ value: "d", another: "y" });
+    col.insert(
+        { value: "a", another: "x" },
+        { value: "b", another: "y" },
+        { value: "c", another: "y" },
+        { value: "d", another: "y" }
+    );
 
     col.remove((doc) => doc.another === "y");
 
@@ -40,11 +37,9 @@ ava("Remove tree documents from the collection", (t) => {
 
 ava("Remove all documents from the collection", (t) => {
     const db = new MycroDatabase();
-    const col = db.collection("col", { id: Number(), value: String() });
+    const col = db.collection("col", { value: String() });
 
-    col.insert({ value: "a" });
-    col.insert({ value: "b" });
-    col.insert({ value: "c" });
+    col.insert({ value: "a" }, { value: "b" }, { value: "c" });
 
     col.remove((_) => true);
 
@@ -56,7 +51,7 @@ ava("Remove all documents from the collection", (t) => {
 
 ava("Try remove a non-existing document from the collection", (t) => {
     const db = new MycroDatabase();
-    const col = db.collection("col", { id: Number(), value: String() });
+    const col = db.collection("col", { value: String() });
 
     col.remove((doc) => doc.value === "a");
 
@@ -65,5 +60,3 @@ ava("Try remove a non-existing document from the collection", (t) => {
 
     t.deepEqual(result, expected);
 });
-
-// TODO: Test fail on try remove without filter

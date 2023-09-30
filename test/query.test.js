@@ -4,10 +4,9 @@ import { MycroDatabase } from "../lib/mycro-db.js";
 
 ava("Get a single document from the collection", (t) => {
     const db = new MycroDatabase();
-    const col = db.collection("col", { id: Number(), value: String() });
+    const col = db.collection("col", { value: String() });
 
-    col.insert({ value: "a" });
-    col.insert({ value: "b" });
+    col.insert({ value: "a" }, { value: "b" });
 
     const result = col.query((doc) => doc.value === "a");
     const expected = [{ id: 1, value: "a" }];
@@ -17,16 +16,14 @@ ava("Get a single document from the collection", (t) => {
 
 ava("Get tree documents from the collection", (t) => {
     const db = new MycroDatabase();
-    const col = db.collection("col", {
-        id: Number(),
-        value: String(),
-        another: String(),
-    });
+    const col = db.collection("col", { value: String(), another: String() });
 
-    col.insert({ value: "a", another: "x" });
-    col.insert({ value: "b", another: "y" });
-    col.insert({ value: "c", another: "y" });
-    col.insert({ value: "d", another: "y" });
+    col.insert(
+        { value: "a", another: "x" },
+        { value: "b", another: "y" },
+        { value: "c", another: "y" },
+        { value: "d", another: "y" }
+    );
 
     const result = col.query((doc) => doc.another === "y");
     const expected = [
@@ -40,11 +37,9 @@ ava("Get tree documents from the collection", (t) => {
 
 ava("Get all documents from the collection", (t) => {
     const db = new MycroDatabase();
-    const col = db.collection("col", { id: Number(), value: String() });
+    const col = db.collection("col", { value: String() });
 
-    col.insert({ value: "a" });
-    col.insert({ value: "b" });
-    col.insert({ value: "c" });
+    col.insert({ value: "a" }, { value: "b" }, { value: "c" });
 
     const result = col.query();
     const expected = [
@@ -58,7 +53,7 @@ ava("Get all documents from the collection", (t) => {
 
 ava("Try get a non-existing document from the collection", (t) => {
     const db = new MycroDatabase();
-    const col = db.collection("col", { id: Number(), value: String() });
+    const col = db.collection("col", { value: String() });
 
     col.query((doc) => doc.value === "a");
 

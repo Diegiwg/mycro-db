@@ -4,7 +4,7 @@ import { MycroDatabase } from "../lib/mycro-db.js";
 
 ava("Insert a unique document into the collection", (t) => {
     const db = new MycroDatabase();
-    const col = db.collection("col", { id: Number(), value: String() });
+    const col = db.collection("col", { value: String() });
 
     col.insert({ value: "a" });
 

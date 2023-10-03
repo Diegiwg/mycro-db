@@ -113,3 +113,6 @@ v1.0.0
     - Storage:
         - Memory: A class that represents an in-memory database.
         - JSON: A class that represents a disk-based database in JSON format.
+
+v1.0.1
+    - Fixed the npmignore file.

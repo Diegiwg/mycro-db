@@ -1,6 +1,16 @@
 *
 
-!lib/*
+!lib/index.js
+
+!lib/core/Collection.js
+!lib/core/MycroDatabase.js
+
+!lib/storage/json.js
+!lib/storage/memory.js
+
+!lib/utils/createDirectoriesRecursively.js
+!lib/utils/removeFileNameAndExtension.js
+
 !package.json
 !README.md
 !LICENSE

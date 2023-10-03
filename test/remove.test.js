@@ -1,62 +1,72 @@
 import ava from "ava";
 
-import { MycroDatabase } from "../lib/mycro-db.js";
+import { MemoryStorage, MycroDatabase } from "../lib/index.js";
 
 ava("Remove a unique document from the collection", (t) => {
-    const db = new MycroDatabase();
+    const db = new MycroDatabase(new MemoryStorage());
+
     const col = db.collection("col", { value: String() });
 
-    col.insert({ value: "a" }, { value: "b" });
+    col.insert([{ value: "a" }, { value: "b" }]);
 
-    col.remove((doc) => doc.value === "a");
+    col.remove(1);
 
     const result = col.query();
-    const expected = [{ id: 2, value: "b" }];
+    const expected = {
+        docs: [
+            {
+                id: 2,
+                value: "b",
+            },
+        ],
+        limit: 25,
+        offset: 0,
+    };
 
     t.deepEqual(result, expected);
 });
 
 ava("Remove tree documents from the collection", (t) => {
-    const db = new MycroDatabase();
+    const db = new MycroDatabase(new MemoryStorage());
     const col = db.collection("col", { value: String(), another: String() });
 
-    col.insert(
+    col.insert([
         { value: "a", another: "x" },
         { value: "b", another: "y" },
         { value: "c", another: "y" },
-        { value: "d", another: "y" }
-    );
+        { value: "d", another: "y" },
+    ]);
 
-    col.remove((doc) => doc.another === "y");
-
-    const result = col.query();
-    const expected = [{ id: 1, value: "a", another: "x" }];
-
-    t.deepEqual(result, expected);
-});
-
-ava("Remove all documents from the collection", (t) => {
-    const db = new MycroDatabase();
-    const col = db.collection("col", { value: String() });
-
-    col.insert({ value: "a" }, { value: "b" }, { value: "c" });
-
-    col.remove((_) => true);
+    col.remove([2, 3, 4]);
 
     const result = col.query();
-    const expected = [];
+    const expected = {
+        docs: [
+            {
+                another: "x",
+                id: 1,
+                value: "a",
+            },
+        ],
+        limit: 25,
+        offset: 0,
+    };
 
     t.deepEqual(result, expected);
 });
 
 ava("Try remove a non-existing document from the collection", (t) => {
-    const db = new MycroDatabase();
+    const db = new MycroDatabase(new MemoryStorage());
     const col = db.collection("col", { value: String() });
 
-    col.remove((doc) => doc.value === "a");
+    col.remove(1);
 
     const result = col.query();
-    const expected = [];
+    const expected = {
+        docs: [],
+        limit: 25,
+        offset: 0,
+    };
 
     t.deepEqual(result, expected);
 });

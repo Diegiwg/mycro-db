@@ -105,5 +105,11 @@ v0.4.1
     - Added a 'static site' using the Github Pages.
 
 v1.0.0
-    - Version under construction, API completely broken.
-        - More explanations in the next cool updates.
+    - Rework of the entire API.
+    - The library has been divided into several modules.
+    - Core
+        - MycroDatabase: The main class of the library, used to build the database access wrapper.
+        - Collection: A class that represents a collection and provides access to its manipulation methods.
+    - Storage:
+        - Memory: A class that represents an in-memory database.
+        - JSON: A class that represents a disk-based database in JSON format.

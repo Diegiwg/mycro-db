@@ -1,78 +1,72 @@
 import ava from "ava";
 
-import { MycroDatabase } from "../lib/mycro-db.js";
+import { MemoryStorage, MycroDatabase } from "../lib/index.js";
 
 ava("Update a unique document in the collection", (t) => {
-    const db = new MycroDatabase();
+    const db = new MycroDatabase(new MemoryStorage());
     const col = db.collection("col", { value: String() });
 
-    col.insert({ value: "a" }, { value: "b" });
+    col.insert([{ value: "a" }, { value: "b" }]);
 
-    col.update((doc) => doc.value === "a", { value: "c" });
+    col.update({ id: 1, data: { value: "c" } });
 
     const result = col.query();
-    const expected = [
-        { id: 1, value: "c" },
-        { id: 2, value: "b" },
-    ];
+    const expected = {
+        docs: [
+            { id: 1, value: "c" },
+            { id: 2, value: "b" },
+        ],
+        limit: 25,
+        offset: 0,
+    };
 
     t.deepEqual(result, expected);
 });
 
 ava("Update tree documents in the collection", (t) => {
-    const db = new MycroDatabase();
-    const col = db.collection("col", {
-        id: Number(),
-        value: String(),
-        another: String(),
-    });
+    const db = new MycroDatabase(new MemoryStorage());
+    const col = db.collection("col", { value: String(), another: String() });
 
-    col.insert(
+    col.insert([
         { value: "a", another: "x" },
         { value: "b", another: "y" },
         { value: "c", another: "y" },
-        { value: "d", another: "y" }
-    );
+        { value: "d", another: "y" },
+    ]);
 
-    col.update((doc) => doc.another === "y", { another: "z" });
-
-    const result = col.query();
-    const expected = [
-        { id: 1, value: "a", another: "x" },
-        { id: 2, value: "b", another: "z" },
-        { id: 3, value: "c", another: "z" },
-        { id: 4, value: "d", another: "z" },
-    ];
-
-    t.deepEqual(result, expected);
-});
-
-ava("Update all documents in the collection", (t) => {
-    const db = new MycroDatabase();
-    const col = db.collection("col", { value: String() });
-
-    col.insert({ value: "a" }, { value: "b" }, { value: "c" });
-
-    col.update((_) => true, { value: "" });
+    col.update([
+        { id: 2, data: { another: "z" } },
+        { id: 3, data: { another: "z" } },
+        { id: 4, data: { another: "z" } },
+    ]);
 
     const result = col.query();
-    const expected = [
-        { id: 1, value: "" },
-        { id: 2, value: "" },
-        { id: 3, value: "" },
-    ];
+    const expected = {
+        docs: [
+            { another: "x", id: 1, value: "a" },
+            { another: "z", id: 2, value: "b" },
+            { another: "z", id: 3, value: "c" },
+            { another: "z", id: 4, value: "d" },
+        ],
+        limit: 25,
+        offset: 0,
+    };
 
     t.deepEqual(result, expected);
 });
 
 ava("Try update a non-existing document in the collection", (t) => {
-    const db = new MycroDatabase();
+    const db = new MycroDatabase(new MemoryStorage());
     const col = db.collection("col", { value: String() });
 
-    col.update((doc) => doc.value === "a", { value: "c" });
+    col.update({ id: 1, data: { value: "c" } });
 
     const result = col.query();
-    const expected = [];
+    const expected = {
+        docs: [],
+        limit: 25,
+        offset: 0,
+    };
 
     t.deepEqual(result, expected);
 });

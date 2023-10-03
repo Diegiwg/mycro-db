@@ -1,6 +1,6 @@
 *
 
-!lib/mycro-db.js
+!lib/*
 !package.json
 !README.md
 !LICENSE

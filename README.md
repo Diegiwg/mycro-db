@@ -109,6 +109,50 @@ User.remove([
 ]);
 ```
 
+## Built-in Storage Strategies
+
+The library supports the following storage strategies:
+
+### In-Memory
+
+This is the simplest strategy, saving the data in memory, until the application reloads and all data is erased.
+
+```javascript
+import { MemoryStorage } from 'mycro-db';
+
+const storage = new MemoryStorage();
+const db = new MycroDatabase(storage);
+```
+
+### JSON
+
+This is the most common to be used, it is for those who need flexibility and persistence.
+
+You can provide a Schema, but it will only be used as a reference for the IDE's Intellisense.
+
+```javascript
+import { JsonStorage } from 'mycro-db';
+
+const storage = new JsonStorage('my_database.json');
+const db = new MycroDatabase(storage);
+```
+
+### Typed JSON
+
+It has the same functionalities as JSON, however, the 'insert' and 'update' functions now use the 'Schema' provided to check whether the documents the user is trying to add to the database are as expected (not has extra fields and all fields have the correct types).
+
+If an extra field, or incorrect value for an existing field in the Schema, is provided, an error is raised.
+
+```javascript
+import { TypedJsonStorage } from 'mycro-db';
+
+const storage = new TypedJsonStorage('my_database.json');
+const db = new MycroDatabase(storage);
+
+const user = db.collection('users', { name: String(), age: Number() });
+// Here, it is defined that a user has the Name and Age fields, and that these are respectively a String and a Number.
+```
+
 ## Next Steps
 
 We're planning to:

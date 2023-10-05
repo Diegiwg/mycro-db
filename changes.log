@@ -137,3 +137,6 @@ v1.2.0
                         - key: if it exists in the object, it must be a string.
                         - xxx: if it exists in the object, it must be an array of Numbers.
         Several cases were tested, and 'apparently' the validation function '(utils/validateSchema.js)' is working correctly.
+
+v1.2.1
+    - Updated the README for add a reference to the new Storage Strategy (TypedJson).

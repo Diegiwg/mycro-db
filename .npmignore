@@ -1,6 +1,7 @@
 *
 
 !lib/index.js
+!lib/types.js
 
 !lib/core/Collection.js
 !lib/core/MycroDatabase.js

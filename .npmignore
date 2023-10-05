@@ -8,9 +8,11 @@
 
 !lib/storage/json.js
 !lib/storage/memory.js
+!lib/storage/typedJson.js
 
 !lib/utils/createDirectoriesRecursively.js
 !lib/utils/removeFileNameAndExtension.js
+!lib/utils/validateSchema.js
 
 !package.json
 !README.md

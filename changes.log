@@ -116,3 +116,7 @@ v1.0.0
 
 v1.0.1
     - Fixed the npmignore file.
+
+v1.1.0
+    - The Storage API has been enhanced with the option to override the functions available in the Collection API.
+        - This primarily aims to enable more complex methods in more intricate Storages.

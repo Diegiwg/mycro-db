@@ -123,3 +123,17 @@ v1.1.0
 
 v1.1.1
     - Fixed the npmignore file.
+
+v1.2.0
+   - Added new Storage model: TypedJson.
+        - Characteristics:
+        Now, when a schema exists, all inserted/updated data is checked.
+        If the type of a data or a key that does not exist in the schema is provided in the Document, an error will be raised.
+        Complex cases were tested, such as: { value: [ { key: String(), xxx: [ Number() ] } ], required: Boolean() }.
+            - Given this example, at run time, each document will be tested, looking for the following requirements:
+                - required: if it exists in the past Document, it must be a boolean.
+                - value: if it exists in the document, it must be an array.
+                    Each value within this array must be an object:
+                        - key: if it exists in the object, it must be a string.
+                        - xxx: if it exists in the object, it must be an array of Numbers.
+        Several cases were tested, and 'apparently' the validation function '(utils/validateSchema.js)' is working correctly.

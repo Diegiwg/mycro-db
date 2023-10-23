@@ -14,6 +14,12 @@ To use MycroDB in your project, you can install it via npm (or other package man
 npm install mycro-db
 ```
 
+# Example
+
+To use an example application, access the following repository:
+
+[Todz](https://github.com/Diegiwg/todz)
+
 ## MycroDB API
 
 To get started, import the 'MycroDatabase' class, along with a 'Storage' class, and initialize the two new objects:

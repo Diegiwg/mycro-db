@@ -157,7 +157,6 @@ const user = db.collection('users', { name: String(), age: Number() });
 
 We're planning to:
 
-- 📦 Expand the range of Storage strategies.
 - 🧹 Implement a data caching system and indexing for specific Collection keys.
 
 ## Changes Log

@@ -1,6 +1,6 @@
 # MycroDB 📦
 
-[![Logo](/public/logo.png)](https://www.npmjs.com/package/mycro-db)
+[![Logo](../public/logo.png)](https://www.npmjs.com/package/mycro-db)
 
 [Documentação em Inglês](https://diegiwg.github.io/mycro-db)
 

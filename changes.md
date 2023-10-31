@@ -1,5 +1,10 @@
 # Version Tracking File
 
+## v1.2.4
+
+    - Fixed the logo link in the Portuguese documentation.
+    - Released the version with the fix on npm.
+
 ## v1.2.3
 
     - Added a category for Portuguese documentation to the GitHub page.

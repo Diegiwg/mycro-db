@@ -1,80 +1,80 @@
-# Version Tracking File
+# Arquivo de Rastreamento de Versão
 
 ## v1.2.5
 
-    - Fixed bug related to synchronization between disk and memory.
+    - Corrigido bug relacionado à sincronização entre disco e memória.
 
 ## v1.2.4
 
-    - Fixed the logo link in the Portuguese documentation.
-    - Released the version with the fix on npm.
+    - Corrigido o link do logotipo na documentação em português.
+    - Lançada a versão com a correção no npm.
 
 ## v1.2.3
 
-    - Added a category for Portuguese documentation to the GitHub page.
-    - A link to this documentation has been added to the README.
+    - Adicionada uma categoria de documentação em português à página do GitHub.
+    - Um link para esta documentação foi adicionado ao README.
 
 ## v1.2.2
 
-    - Fixed a bug in the generics system that ensures intellisense in collections.
-    - Modified the file structure of changes.
+    - Corrigido um bug no sistema de genéricos que garante a intellisense nas coleções.
+    - Modificada a estrutura de arquivo de alterações.
 
 ## v1.2.1
 
-    - Updated the README for add a reference to the new Storage Strategy (TypedJson).
+    - Atualizado o README para adicionar uma referência à nova Estratégia de Armazenamento (TypedJson).
 
 ## v1.2.0
 
-    - Added new Storage model: TypedJson.
-    - Characteristics:
-            Now, when a schema exists, all inserted/updated data is checked.
-            If the type of a data or a key that does not exist in the schema is provided in the Document, an error will be raised.
-            Complex cases were tested, such as: { value: [ { key: String(), xxx: [ Number() ] } ], required: Boolean() }.
-        - Given this example, at run time, each document will be tested, looking for the following requirements:
-        - required: if it exists in the past Document, it must be a boolean.
-        - value: if it exists in the document, it must be an array.
-                        Each value within this array must be an object:
-                            - key: if it exists in the object, it must be a string.
-                            - xxx: if it exists in the object, it must be an array of Numbers.
-            Several cases were tested, and 'apparently' the validation function '(utils/validateSchema.js)' is working correctly.
+    - Adicionado um novo modelo de armazenamento: TypedJson.
+    - Características:
+            Agora, quando um esquema existe, todos os dados inseridos/atualizados são verificados.
+            Se o tipo de um dado ou uma chave que não existe no esquema é fornecido no Documento, um erro será gerado.
+            Casos complexos foram testados, como: { value: [ { key: String(), xxx: [ Number() ] } ], required: Boolean() }.
+        - Dado este exemplo, em tempo de execução, cada documento será testado em busca dos seguintes requisitos:
+        - required: se existir no Documento anterior, deve ser um booleano.
+        - value: se existir no documento, deve ser um array.
+                        Cada valor dentro deste array deve ser um objeto:
+                            - key: se existir no objeto, deve ser uma string.
+                            - xxx: se existir no objeto, deve ser um array de números.
+            Vários casos foram testados e, aparentemente, a função de validação '(utils/validateSchema.js)' está funcionando corretamente.
 
 ## v1.1.1
 
-    - Fixed the npmignore file.
+    - Corrigido o arquivo .npmignore.
 
 ## v1.1.0
 
-    - The Storage API has been enhanced with the option to override the functions available in the Collection API.
-        - This primarily aims to enable more complex methods in more intricate Storages.
+    - A API de Armazenamento foi aprimorada com a opção de substituir as funções disponíveis na API de Coleções.
+        - Isso visa principalmente permitir métodos mais complexos em Armazenamentos mais intricados.
 
 ## v1.0.1
 
-    - Fixed the npmignore file.
+    - Corrigido o arquivo .npmignore.
 
 ## v1.0.0
 
-    - Rework of the entire API.
-    - The library has been divided into several modules.
+    - Reformulação de toda a API.
+    - A biblioteca foi dividida em vários módulos.
     - Core
-        - MycroDatabase: The main class of the library, used to build the database access wrapper.
-        - Collection: A class that represents a collection and provides access to its manipulation methods.
+        - MycroDatabase: A classe principal da biblioteca, usada para construir o wrapper de acesso ao banco de dados.
+        - Collection: Uma classe que representa uma coleção e fornece acesso aos seus métodos de manipulação.
     - Storage:
-        - Memory: A class that represents an in-memory database.
-        - JSON: A class that represents a disk-based database in JSON format.
+        - Memory: Uma classe que representa um banco de dados em memória.
+        - JSON: Uma classe que representa um banco de dados baseado em disco no formato JSON.
 
 ## v0.4.1
 
-    - Added a 'static site' using the Github Pages.
+    - Adicionado um 'site estático' usando as Páginas do Github.
 
 ## v0.4.0
 
-    - Removed the old build script.
-        - 'insert' now accepts multiple documents, making it simpler to insert multiple documents at once.
-            - Example: `db.collection('users', {id: 0, name: "", age: 0}).insert([{name: "John Doe", age: 20}, {name: "Jane Doe, age: 30}])`
-        - 'insert', 'update', and 'remove' now return the list of IDs related to the affected documents (created, modified, and removed).
-        - General improvements in argument validations for functions.
-        - Updated tests to reflect the changes.
-        - README documentation updated.
+    - Removido o antigo script de compilação.
+        - 'insert' agora aceita vários documentos, tornando mais simples a inserção de vários documentos de uma vez.
+            - Exemplo: `db.collection('users', {id: 0, name: "", age: 0}).insert([{name: "John Doe", age: 20}, {name: "Jane Doe, age: 30}])`
+        - 'insert', 'update' e 'remove' agora retornam a lista de IDs relacionados aos documentos afetados (criados, modificados e removidos).
+        - Melhorias gerais na validação de argumentos para funções.
+        - Testes atualizados para refletir as mudanças.
+        - Documentação do README atualizada.
 
 ## v0.3.2
 

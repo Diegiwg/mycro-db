@@ -1,5 +1,10 @@
 # Version Tracking File
 
+## v1.2.3
+
+    - Added a category for Portuguese documentation to the GitHub page.
+    - A link to this documentation has been added to the README.
+
 ## v1.2.2
 
     - Fixed a bug in the generics system that ensures intellisense in collections.

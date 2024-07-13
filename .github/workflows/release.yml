@@ -3,8 +3,7 @@ on:
     workflow_dispatch:
     push:
         branches:
-            - master
-            - next
+            - master, next
 
 jobs:
     release:
